@@ -16,6 +16,10 @@ export const routes: Routes = [
         component: MenuComponent
     },
     {
+        path: 'aboutus',
+        component: AboutComponent
+    },
+    {
         path: 'contactus',
         component: ContactComponent
     },
