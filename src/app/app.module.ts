@@ -23,7 +23,11 @@ import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
-import { LeaderComponent } from './leader/leader.component'
+import { LeaderComponent } from './leader/leader.component';
+import { LoginComponent } from './login/login.component'
+
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +39,8 @@ import { LeaderComponent } from './leader/leader.component'
     AboutComponent,
     HomeComponent,
     ContactComponent,
-    LeaderComponent
+    LeaderComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -47,10 +52,14 @@ import { LeaderComponent } from './leader/leader.component'
     MatGridListModule,
     MatCardModule,
     MatButtonModule,
+    MatDialogModule
   ],
   providers: [
     DishService,
     LeaderService
+  ],
+  entryComponents: [
+    LoginComponent
   ],
   bootstrap: [AppComponent]
 })
