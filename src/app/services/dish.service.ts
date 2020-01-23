@@ -13,6 +13,9 @@ import { delay } from 'rxjs/operators'
 
 export class DishService {
 
+  getDishIds(): Observable<string[] | any> {
+    return of(DISHES.map(dish => dish.id ));
+  }
  
   getDishes(): Observable<Dish[]>{    
     return of(DISHES).pipe(delay(2000));
