@@ -34,6 +34,7 @@ import { LoginComponent } from './login/login.component'
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule, MatSlideToggleModule } from '@angular/material';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
     MatSelectModule,
     MatSlideToggleModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSliderModule
   ],
   providers: [
     DishService,

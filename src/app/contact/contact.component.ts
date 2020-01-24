@@ -18,7 +18,7 @@ export class ContactComponent implements OnInit {
   //ANGULAR 8
   @ViewChild('fform',{static:false}) feedbackFormDirective;
   //ANGULAR 7
-  //@ViewChild('fform',{static:false}) feedbackFormDirective;
+  //@ViewChild('fform') feedbackFormDirective;
 
   constructor(private fb: FormBuilder) { this.createForm() }
 
