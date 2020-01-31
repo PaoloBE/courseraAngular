@@ -19,10 +19,12 @@ export class DishdetailComponent implements OnInit {
   feedback: Feedback;
 
   dish: Dish;
-
   dishIds: string[];
+  dishcopy: Dish;
+
   prev: string;
-  next: string;
+  next: string;  
+  errMess: string;
 
   //ANGULAR 8
     @ViewChild('fform',{static:false}) feedbackFormDirective;
@@ -107,7 +109,7 @@ export class DishdetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
+    this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds,errMess=>this.errMess=<any>this.errMess);
     this.route.params.pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
     .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
   }

@@ -5,7 +5,7 @@ import { DISHES } from '../shared/dishes'
 import { of, Observable } from 'rxjs';
 
 import { map, catchError } from 'rxjs/operators'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { baseURL } from '../shared/baseurl'
 import { ProcessHTTPMsgService } from './process-httpmsg.service';
 
@@ -38,5 +38,16 @@ export class DishService {
   getFeactureDish(): Observable<Dish> {
     return this.http.get<Dish[]>(baseURL + 'dishes?featured=true').pipe(map(dishes => dishes[0]))
               .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+  
+  putDish(dish: Dish): Observable<Dish> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    return this.http.put<Dish>(baseURL + 'dishes/' + dish.id, dish, httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+
   }
 }
