@@ -1,3 +1,5 @@
+import { HttpClientModule } from '@angular/common/http';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -36,6 +38,8 @@ import { MatSelectModule, MatSlideToggleModule } from '@angular/material';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatSliderModule } from '@angular/material/slider';
 
+import { baseURL } from './shared/baseurl'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,11 +72,13 @@ import { MatSliderModule } from '@angular/material/slider';
     MatSlideToggleModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
-    MatSliderModule
+    MatSliderModule,
+    HttpClientModule
   ],
   providers: [
     DishService,
-    LeaderService
+    LeaderService,
+    {provide: 'baseURL',useValue: baseURL}
   ],
   entryComponents: [
     LoginComponent
