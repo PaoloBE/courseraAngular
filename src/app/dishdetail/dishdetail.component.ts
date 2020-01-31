@@ -32,24 +32,16 @@ export class DishdetailComponent implements OnInit {
 
   formErrors = {
     'name': '',
-    'rating': '',
     'comment': ''
   };
 
   validationMessages = {
     'name': {
-      'required':      'First Name is required.',
-      'minlength':     'First Name must be at least 2 characters long.',
-      'maxlength':     'FirstName cannot be more than 25 characters long.'
-    },
-    'rating': {
-      'required':      'Last Name is required.',
-      'minlength':     'Last Name must be at least 2 characters long.',
-      'maxlength':     'Last Name cannot be more than 25 characters long.'
+      'required':      'Name is required.',
+      'minlength':     'Name must be at least 2 characters long.'
     },
     'comment': {
-      'required':      'Tel. number is required.',
-      'pattern':       'Tel. number must contain only numbers.'
+      'required':      'Comment is required.'
     },
   };
 
@@ -57,10 +49,11 @@ export class DishdetailComponent implements OnInit {
               private route: ActivatedRoute,
               private location: Location,
               private fb: FormBuilder) { this.createForm() }
+
   createForm(){
     this.feedbackForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
-      rating: [0, [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
+      name: ['', [Validators.required, Validators.minLength(2)] ],
+      rating: [5, [Validators.required]],
       comment: ['', [Validators.required] ],
     });
     this.feedbackForm.valueChanges
@@ -95,13 +88,20 @@ export class DishdetailComponent implements OnInit {
 
   onSubmit(){
     this.feedback = this.feedbackForm.value;
+    
+    this.dish.comments.push({
+      rating: this.feedbackForm.value.rating,
+      comment: this.feedbackForm.value.comment,
+      author: this.feedbackForm.value.name,
+      date: new Date().toISOString()
+    })
+
     console.log(this.feedback)
     this.feedbackForm.reset({
       name: '',
-      rating: 0,
+      rating: 5,
       comment: ''
     });
-
     this.feedbackFormDirective.resetForm();
   }
 
