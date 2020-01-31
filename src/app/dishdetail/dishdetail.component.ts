@@ -25,7 +25,7 @@ export class DishdetailComponent implements OnInit {
   next: string;
 
   //ANGULAR 8
-  @ViewChild('fform',{static:false}) feedbackFormDirective;
+    @ViewChild('fform',{static:false}) feedbackFormDirective;
   //ANGULAR 7
   //@ViewChild('fform') feedbackFormDirective;
 
@@ -117,7 +117,5 @@ export class DishdetailComponent implements OnInit {
     this.next = this.dishIds[(this.dishIds.length + index + 1) % this.dishIds.length];
   }
 
-  goBack(): void {
-    this.location.back();
-  }
+  goBack(): void {this.location.back();}
 }
