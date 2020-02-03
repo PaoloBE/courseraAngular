@@ -6,7 +6,7 @@
         fxLayoutGap="50px" 
         fxLayoutGap.xs="0">
 
-    <div fxFlex="40">
+    <div fxFlex="40" [@visibility]='visibility'>
         <mat-card>
             <mat-card-header>
                 <mat-card-title>
@@ -27,7 +27,7 @@
             </mat-card-actions>
         </mat-card>
     </div>
-    <div fxFlex="40">
+    <div fxFlex="40" [@visibility]='visibility'>
         <mat-list *ngIf="dish">
             <h3>Comments</h3>
             <mat-list-item *ngFor='let com of dish.comments'>
@@ -38,14 +38,14 @@
             <mat-list-item *ngIf="feedbackForm.value.comment">
                 <span matLine>{{ feedbackForm.value.comment }}</span>
                 <span matLine>{{ feedbackForm.value.rating | json }} Stars</span>
-                <span matLine>--{{ feedbackForm.value.name }}</span>
+                <span matLine>--{{ feedbackForm.value.author }}</span>
             </mat-list-item>
         </mat-list>
         <form *ngIf="dish" novalidate [formGroup]="feedbackForm" #fform='ngForm' (ngSubmit)="onSubmit()">
             <p>
                 <mat-form-field class="full-width" hideRequiredMarker>
-                    <input matInput formControlName="name" placeholder="Name" type="text" required>
-                    <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
+                    <input matInput formControlName="author" placeholder="Name" type="text" required>
+                    <mat-error *ngIf="formErrors.author">{{formErrors.author}}</mat-error>
                 </mat-form-field>
             </p>
             <p>

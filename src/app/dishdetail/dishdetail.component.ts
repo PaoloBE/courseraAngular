@@ -1,5 +1,6 @@
 import { Component, OnInit, Input,ViewChild, Inject } from '@angular/core';
 import { Dish } from '../shared/dish'
+import { Comment } from '../shared/comment'
 import { DishService } from '../services/dish.service';
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -7,11 +8,15 @@ import { switchMap } from 'rxjs/operators'
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Feedback, ContactType } from '../shared/feedback'
+import { visibility } from '../animations/app.animation';
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
-  styleUrls: ['./dishdetail.component.scss']
+  styleUrls: ['./dishdetail.component.scss'],
+  animations: [
+    visibility()
+  ]
 })
 export class DishdetailComponent implements OnInit {
 
@@ -26,19 +31,22 @@ export class DishdetailComponent implements OnInit {
   next: string;  
   errMess: string;
 
+  visibility = 'shown';
+
   //ANGULAR 8
     @ViewChild('fform',{static:false}) feedbackFormDirective;
   //ANGULAR 7
   //@ViewChild('fform') feedbackFormDirective;
 
+  comment: Comment;
 
   formErrors = {
-    'name': '',
+    'author': '',
     'comment': ''
   };
 
   validationMessages = {
-    'name': {
+    'author': {
       'required':      'Name is required.',
       'minlength':     'Name must be at least 2 characters long.'
     },
@@ -55,7 +63,7 @@ export class DishdetailComponent implements OnInit {
 
   createForm(){
     this.feedbackForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)] ],
+      author: ['', [Validators.required, Validators.minLength(2)] ],
       rating: [5, [Validators.required]],
       comment: ['', [Validators.required] ],
     });
@@ -90,18 +98,15 @@ export class DishdetailComponent implements OnInit {
   }
 
   onSubmit(){
-    this.feedback = this.feedbackForm.value;
-    
-    this.dish.comments.push({
-      rating: this.feedbackForm.value.rating,
-      comment: this.feedbackForm.value.comment,
-      author: this.feedbackForm.value.name,
-      date: new Date().toISOString()
-    })
-
-    console.log(this.feedback)
+    this.comment = this.feedbackForm.value;
+    this.comment.date = new Date().toISOString();
+    this.dishcopy.comments.push(this.comment);
+    this.dishService.putDish(this.dishcopy)
+      .subscribe(dish => {
+        this.dish = dish; this.dishcopy = dish;
+      },errmess => {this.dish = null; this.dishcopy = null;this.errMess = <any>errmess})
     this.feedbackForm.reset({
-      name: '',
+      author: '',
       rating: 5,
       comment: ''
     });
@@ -110,8 +115,9 @@ export class DishdetailComponent implements OnInit {
 
   ngOnInit() {
     this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds,errMess=>this.errMess=<any>this.errMess);
-    this.route.params.pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
-    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+    this.route.params
+    .pipe(switchMap((params: Params) => { this.visibility = 'hidden';return this.dishService.getDish(params['id']);}))
+    .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); this.visibility='shown'}, errmess => this.errMess = <any>errmess);
   }
 
   setPrevNext(dishId: string) {

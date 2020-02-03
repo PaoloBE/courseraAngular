@@ -38,7 +38,8 @@ import { MatSelectModule, MatSlideToggleModule } from '@angular/material';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatSliderModule } from '@angular/material/slider';
 
-import { baseURL } from './shared/baseurl'
+import { baseURL } from './shared/baseurl';
+import { HighlightDirective } from './directives/highlight.directive'
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { baseURL } from './shared/baseurl'
     HomeComponent,
     ContactComponent,
     LeaderComponent,
-    LoginComponent
+    LoginComponent,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,
