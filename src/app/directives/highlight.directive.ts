@@ -12,7 +12,7 @@ export class HighlightDirective {
       this.renderer.addClass(this.el.nativeElement, 'highlight');
     }
   
-    @HostListener('mouseleave') onMouseLeave() {
+    @HostListener('mouseleave') onMouseLeave() {s
       this.renderer.removeClass(this.el.nativeElement, 'highlight');
     }
     
